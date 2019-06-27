@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const socketio = require('socket.io')
 const http = require('http')
+const SER_PORT=process.env.PORT||2345
 
 const app = express();
 const server = http.createServer(app)
