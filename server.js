@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const socketio = require('socket.io')
 const http = require('http')
-const SER_PORT=process.env.PORT||2345
+const SERVER_PORT = process.env.PORT || 2345
 
 const app = express();
 const server = http.createServer(app)
@@ -19,8 +19,15 @@ io.on('connection', (socket) => {
     socket.on('login', (data) => {
         // username is in data.user
         usersockets[data.user] = socket.id
+        socket.broadcast.emit("new_user",data.user)
         console.log(usersockets)
     })
+
+    socket.on("typing",function(data){
+
+       socket.broadcast.emit("typer",data.user)
+    })
+
     
     socket.on('send_msg', (data) => {
         // if we use io.emit, everyone gets it
@@ -38,4 +45,4 @@ io.on('connection', (socket) => {
 
 })
 
-server.listen(SER_PORT, () => console.log('Website open on http://localhost:2345'))
+server.listen((SERVER_PORT), () => console.log('Website open on http://localhost:2345'))
