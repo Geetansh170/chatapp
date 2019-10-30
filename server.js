@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
         } else {
             io.emit('recv_msg', data)
         }
+        //receive message
     })
 
 })
