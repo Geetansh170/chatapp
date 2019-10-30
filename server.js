@@ -19,27 +19,28 @@ io.on('connection', (socket) => {
     socket.on('login', (data) => {
         // username is in data.user
         usersockets[data.user] = socket.id
-        socket.broadcast.emit("new_user",data.user)
+        socket.broadcast.emit("new_user", data.user)
         console.log(usersockets)
     })
 
-    socket.on("typing",function(data){
+    socket.on("typing", function (data) {
 
-       socket.broadcast.emit("typer",data.user)
+        socket.broadcast.emit("typer", data.user)
     })
 
-    
+
     socket.on('send_msg', (data) => {
         // if we use io.emit, everyone gets it
         // if we use socket.broadcast.emit, only others get it
         if (data.message.startsWith('@')) {
             //data.message = "@a: hello"
             // split at :, then remove @ from beginning
+            // check online userr list
             let recipient = data.message.split(':')[0].substr(1)
             let rcptSocket = usersockets[recipient]
             io.to(rcptSocket).emit('recv_msg', data)
         } else {
-            io.emit('recv_msg', data)            
+            io.emit('recv_msg', data)
         }
     })
 
