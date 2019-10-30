@@ -11,7 +11,7 @@ const io = socketio(server)
 let usersockets = {}
 
 app.use('/', express.static(path.join(__dirname, 'frontend')))
-
+//directory name
 io.on('connection', (socket) => {
     console.log("New socket formed from " + socket.id)
     socket.emit('connected')
@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
         } else {
             io.emit('recv_msg', data)
         }
+        //receive message
     })
 
 })
