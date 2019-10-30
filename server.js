@@ -7,7 +7,7 @@ const SERVER_PORT = process.env.PORT || 2345
 const app = express();
 const server = http.createServer(app)
 const io = socketio(server)
-
+// basic server setup
 let usersockets = {}
 
 app.use('/', express.static(path.join(__dirname, 'frontend')))
